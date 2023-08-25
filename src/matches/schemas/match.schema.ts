@@ -7,10 +7,10 @@ export type MatchDocument = Match & Document;
 
 @Schema()
 export class Match {
-  @Prop({ type: [{ type: 'ObjectId', ref: 'Player' }] }) // Player modeline referans verilir
+  @Prop({ type: [{ type: 'ObjectId', ref: 'Player' }] })
   players: Player[];
 
-  @Prop({ type: 'ObjectId', ref: 'GameField' }) // GameField modeline referans verilir
+  @Prop({ type: 'ObjectId', ref: 'GameField' })
   gameFieldId: GameField;
 
   @Prop({ type: Date, default: Date.now })
@@ -22,10 +22,10 @@ export class Match {
   @Prop({ type: Date })
   matchDate: Date;
 
-  @Prop({ type: [String] }) // Scores array'i
+  @Prop({ type: [String] })
   scores: string[];
 
-  @Prop({ type: 'ObjectId', ref: 'Player' }) // Winner oyuncusu için referans
+  @Prop({ type: 'ObjectId', ref: 'Player' })
   winnerPlayerId: Player;
 }
 

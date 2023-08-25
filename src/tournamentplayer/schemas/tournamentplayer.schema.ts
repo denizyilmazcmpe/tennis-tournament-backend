@@ -7,10 +7,10 @@ export type TournamentPlayerDocument = TournamentPlayer & Document;
 
 @Schema()
 export class TournamentPlayer {
-  @Prop({ type: 'ObjectId', ref: 'Tournament' }) // Tournament modeline referans verilir
+  @Prop({ type: 'ObjectId', ref: 'Tournament' })
   tournamentId: Tournament;
 
-  @Prop({ type: 'ObjectId', ref: 'Player' }) // Player modeline referans verilir
+  @Prop({ type: 'ObjectId', ref: 'Player' })
   playerId: Player;
 
   @Prop({ type: Date, default: Date.now })

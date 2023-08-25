@@ -7,10 +7,10 @@ export type UserTournamentDocument = UserTournament & Document;
 
 @Schema()
 export class UserTournament {
-  @Prop({ type: 'ObjectId', ref: 'User' }) // User modeline referans verilir
+  @Prop({ type: 'ObjectId', ref: 'User' })
   userId: User;
 
-  @Prop({ type: 'ObjectId', ref: 'Tournament' }) // Tournament modeline referans verilir
+  @Prop({ type: 'ObjectId', ref: 'Tournament' })
   tournamentId: Tournament;
 
   @Prop({ type: Date, default: Date.now })

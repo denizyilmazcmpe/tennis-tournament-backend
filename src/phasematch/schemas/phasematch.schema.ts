@@ -7,10 +7,10 @@ export type PhaseMatchDocument = PhaseMatch & Document;
 
 @Schema()
 export class PhaseMatch {
-  @Prop({ type: 'ObjectId', ref: 'Phase' }) // Phase modeline referans verilir
+  @Prop({ type: 'ObjectId', ref: 'Phase' })
   phaseId: Phase;
 
-  @Prop({ type: 'ObjectId', ref: 'Match' }) // Match modeline referans verilir
+  @Prop({ type: 'ObjectId', ref: 'Match' })
   matchId: Match;
 }
 

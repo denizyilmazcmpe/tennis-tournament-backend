@@ -15,7 +15,7 @@ export class Tournament {
   @Prop({ type: Date, default: Date.now })
   updatedAt: Date;
 
-  @Prop({ type: [{ type: 'ObjectId', ref: 'Phase' }] }) // Phase modeline referans verilir
+  @Prop({ type: [{ type: 'ObjectId', ref: 'Phase' }] })
   phases: Phase[];
 }
 
