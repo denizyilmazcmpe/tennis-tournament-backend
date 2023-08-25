@@ -10,6 +10,7 @@ import { GameFieldModule } from './gamefield/gamefield.module';
 import { PhaseMatchModule } from './phasematch/phasematch.module';
 import { UsersModule } from './users/users.module';
 import { UserTournamentModule } from './usertournament/usertournament.module';
+import { TournamentPlayerModule } from './tournamentplayer/tournamentplayer.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { UserTournamentModule } from './usertournament/usertournament.module';
     PhaseMatchModule,
     UsersModule,
     UserTournamentModule,
+    TournamentPlayerModule,
   ],
   controllers: [AppController],
   providers: [AppService],
