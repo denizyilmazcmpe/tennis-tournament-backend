@@ -8,40 +8,38 @@ import {
   Param,
 } from '@nestjs/common';
 import { TournamentService } from './tournament.service';
-import { CreateTournamentDto } from './create-tournament.dto';
-import { Tournament } from './tournament.entity';
+import { CreateTournamentDto } from './dto/create-tournament.dto';
+import { UpdateTournamentDto } from './dto/update-tournament.dto';
 
-@Controller('tournaments')
+@Controller('tournament')
 export class TournamentController {
-  constructor(private tournamentService: TournamentService) {}
+  constructor(private readonly tournamentService: TournamentService) {}
 
   @Post()
-  async createTournament(
-    @Body() createTournamentDto: CreateTournamentDto,
-  ): Promise<Tournament> {
-    return this.tournamentService.createTournament(createTournamentDto);
+  create(@Body() createTournamentDto: CreateTournamentDto) {
+    return this.tournamentService.create(createTournamentDto);
   }
 
   @Get()
-  async getAllTournaments(): Promise<Tournament[]> {
-    return this.tournamentService.getAllTournaments();
+  findAll() {
+    return this.tournamentService.findAll();
   }
 
   @Get(':id')
-  async getTournamentById(@Param('id') id: string): Promise<Tournament> {
-    return this.tournamentService.getTournamentById(id);
+  findOne(@Param('id') id: string) {
+    return this.tournamentService.findOne(id);
   }
 
   @Put(':id')
-  async updateTournament(
+  update(
     @Param('id') id: string,
-    @Body() updateTournamentDto: CreateTournamentDto,
-  ): Promise<Tournament> {
-    return this.tournamentService.updateTournament(id, updateTournamentDto);
+    @Body() updateTournamentDto: UpdateTournamentDto,
+  ) {
+    return this.tournamentService.update(id, updateTournamentDto);
   }
 
   @Delete(':id')
-  async deleteTournament(@Param('id') id: string): Promise<Tournament> {
-    return this.tournamentService.deleteTournament(id);
+  remove(@Param('id') id: string) {
+    return this.tournamentService.remove(id);
   }
 }

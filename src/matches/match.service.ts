@@ -1,38 +1,50 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Match, MatchDocument } from './match.entity';
-import { CreateMatchDto } from './create-match.dto';
+import { Match, MatchDocument } from './schemas/match.schema';
+import { CreateMatchDto } from './dto/create-match.dto';
+import { UpdateMatchDto } from './dto/update-match.dto';
 
 @Injectable()
 export class MatchService {
   constructor(
-    @InjectModel(Match.name) private matchModel: Model<MatchDocument>,
+    @InjectModel(Match.name)
+    private matchModel: Model<MatchDocument>,
   ) {}
 
-  async createMatch(createMatchDto: CreateMatchDto): Promise<Match> {
+  async create(createMatchDto: CreateMatchDto): Promise<Match> {
     const createdMatch = new this.matchModel(createMatchDto);
     return createdMatch.save();
   }
 
-  async findAllMatches(): Promise<Match[]> {
+  async findAll(): Promise<Match[]> {
     return this.matchModel.find().exec();
   }
 
-  async findMatchById(id: string): Promise<Match> {
-    return this.matchModel.findById(id).exec();
+  async findOne(id: string): Promise<Match> {
+    const match = await this.matchModel.findById(id).exec();
+    if (!match) {
+      throw new NotFoundException('Match not found');
+    }
+    return match;
   }
 
-  async updateMatch(
-    id: string,
-    updateMatchDto: CreateMatchDto,
-  ): Promise<Match> {
-    return this.matchModel
-      .findByIdAndUpdate(id, updateMatchDto, { new: true })
-      .exec();
+  async update(id: string, updateMatchDto: UpdateMatchDto): Promise<Match> {
+    const existingMatch = await this.matchModel.findByIdAndUpdate(
+      id,
+      { $set: updateMatchDto },
+      { new: true },
+    );
+    if (!existingMatch) {
+      throw new NotFoundException('Match not found');
+    }
+    return existingMatch;
   }
 
-  async deleteMatch(id: string): Promise<Match> {
-    return this.matchModel.findByIdAndDelete(id).exec();
+  async remove(id: string): Promise<void> {
+    const result = await this.matchModel.deleteOne({ _id: id }).exec();
+    if (result.deletedCount === 0) {
+      throw new NotFoundException('Match not found');
+    }
   }
 }

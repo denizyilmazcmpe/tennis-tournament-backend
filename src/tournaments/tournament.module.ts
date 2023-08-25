@@ -1,16 +1,16 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { Tournament, TournamentSchema } from './schemas/tournament.schema';
 import { TournamentController } from './tournament.controller';
 import { TournamentService } from './tournament.service';
-import { TournamentModel, TournamentSchema } from './tournament.entity'; // Schema'yı doğrudan import edin
 
 @Module({
   imports: [
     MongooseModule.forFeature([
-      { name: 'Tournament', schema: TournamentSchema },
+      { name: Tournament.name, schema: TournamentSchema },
     ]),
   ],
   controllers: [TournamentController],
-  providers: [TournamentService, TournamentModel],
+  providers: [TournamentService],
 })
 export class TournamentModule {}

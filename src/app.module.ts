@@ -2,9 +2,13 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { PlayerModule } from './players/player.module';
 import { MatchModule } from './matches/match.module';
-import { TournamentModule } from './tournaments/tournament.module'; // Oluşturduğunuz modül yolu
+import { TournamentModule } from './tournaments/tournament.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { PhaseModule } from './phases/phase.module';
+import { GameFieldModule } from './gamefield/gamefield.module';
+import { PhaseMatchModule } from './phasematch/phasematch.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -12,6 +16,10 @@ import { AppService } from './app.service';
     PlayerModule,
     MatchModule,
     TournamentModule,
+    PhaseModule,
+    GameFieldModule,
+    PhaseMatchModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

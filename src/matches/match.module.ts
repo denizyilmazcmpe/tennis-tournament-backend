@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Match, MatchSchema } from './match.entity';
+import { Match, MatchSchema } from './schemas/match.schema';
 import { MatchController } from './match.controller';
 import { MatchService } from './match.service';
 

@@ -1,41 +1,53 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Tournament } from './tournament.entity';
-import { CreateTournamentDto } from './create-tournament.dto';
+import { Tournament, TournamentDocument } from './schemas/tournament.schema';
+import { CreateTournamentDto } from './dto/create-tournament.dto';
+import { UpdateTournamentDto } from './dto/update-tournament.dto';
 
 @Injectable()
 export class TournamentService {
   constructor(
-    @InjectModel('Tournament')
-    private readonly tournamentModel: Model<Tournament>,
+    @InjectModel(Tournament.name)
+    private tournamentModel: Model<TournamentDocument>,
   ) {}
 
-  async createTournament(
-    createTournamentDto: CreateTournamentDto,
-  ): Promise<Tournament> {
+  async create(createTournamentDto: CreateTournamentDto): Promise<Tournament> {
     const createdTournament = new this.tournamentModel(createTournamentDto);
     return createdTournament.save();
   }
 
-  async getAllTournaments(): Promise<Tournament[]> {
+  async findAll(): Promise<Tournament[]> {
     return this.tournamentModel.find().exec();
   }
 
-  async getTournamentById(id: string): Promise<Tournament> {
-    return this.tournamentModel.findById(id).exec();
+  async findOne(id: string): Promise<Tournament> {
+    const tournament = await this.tournamentModel.findById(id).exec();
+    if (!tournament) {
+      throw new NotFoundException('Tournament not found');
+    }
+    return tournament;
   }
 
-  async updateTournament(
+  async update(
     id: string,
-    updateTournamentDto: CreateTournamentDto,
+    updateTournamentDto: UpdateTournamentDto,
   ): Promise<Tournament> {
-    return this.tournamentModel
-      .findByIdAndUpdate(id, updateTournamentDto, { new: true })
-      .exec();
+    const existingTournament = await this.tournamentModel.findByIdAndUpdate(
+      id,
+      { $set: updateTournamentDto },
+      { new: true },
+    );
+    if (!existingTournament) {
+      throw new NotFoundException('Tournament not found');
+    }
+    return existingTournament;
   }
 
-  async deleteTournament(id: string): Promise<Tournament> {
-    return this.tournamentModel.findByIdAndRemove(id).exec();
+  async remove(id: string): Promise<void> {
+    const result = await this.tournamentModel.deleteOne({ _id: id }).exec();
+    if (result.deletedCount === 0) {
+      throw new NotFoundException('Tournament not found');
+    }
   }
 }
