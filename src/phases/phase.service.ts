@@ -13,16 +13,16 @@ export class PhaseService {
   ) {}
 
   async create(createPhaseDto: CreatePhaseDto): Promise<Phase> {
-    const createdPhase = new this.phaseModel(createPhaseDto);
-    return createdPhase.save();
+    const createdPhase = await this.phaseModel.create(createPhaseDto);
+    return createdPhase;
   }
 
   async findAll(): Promise<Phase[]> {
-    return this.phaseModel.find().exec();
+    return await this.phaseModel.find();
   }
 
   async findOne(id: string): Promise<Phase> {
-    const phase = await this.phaseModel.findById(id).exec();
+    const phase = await this.phaseModel.findById(id);
     if (!phase) {
       throw new NotFoundException('Phase not found');
     }
@@ -42,7 +42,7 @@ export class PhaseService {
   }
 
   async remove(id: string): Promise<void> {
-    const result = await this.phaseModel.deleteOne({ _id: id }).exec();
+    const result = await this.phaseModel.deleteOne({ _id: id });
     if (result.deletedCount === 0) {
       throw new NotFoundException('Phase not found');
     }

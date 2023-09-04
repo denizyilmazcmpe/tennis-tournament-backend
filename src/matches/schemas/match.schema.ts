@@ -5,19 +5,13 @@ import { GameField } from '../../gamefield/schemas/gamefield.schema';
 
 export type MatchDocument = Match & Document;
 
-@Schema()
+@Schema({ timestamps: true })
 export class Match {
   @Prop({ type: [{ type: 'ObjectId', ref: 'Player' }] })
   players: Player[];
 
   @Prop({ type: 'ObjectId', ref: 'GameField' })
   gameFieldId: GameField;
-
-  @Prop({ type: Date, default: Date.now })
-  createdAt: Date;
-
-  @Prop({ type: Date, default: Date.now })
-  updatedAt: Date;
 
   @Prop({ type: Date })
   matchDate: Date;

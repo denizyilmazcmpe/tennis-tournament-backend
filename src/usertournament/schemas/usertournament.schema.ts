@@ -5,16 +5,13 @@ import { Tournament } from '../../tournaments/schemas/tournament.schema';
 
 export type UserTournamentDocument = UserTournament & Document;
 
-@Schema()
+@Schema({ timestamps: true })
 export class UserTournament {
   @Prop({ type: 'ObjectId', ref: 'User' })
   userId: User;
 
   @Prop({ type: 'ObjectId', ref: 'Tournament' })
   tournamentId: Tournament;
-
-  @Prop({ type: Date, default: Date.now })
-  createdAt: Date;
 }
 
 export const UserTournamentSchema =

@@ -13,16 +13,16 @@ export class MatchService {
   ) {}
 
   async create(createMatchDto: CreateMatchDto): Promise<Match> {
-    const createdMatch = new this.matchModel(createMatchDto);
-    return createdMatch.save();
+    const createdMatch = await this.matchModel.create(createMatchDto);
+    return createdMatch;
   }
 
   async findAll(): Promise<Match[]> {
-    return this.matchModel.find().exec();
+    return await this.matchModel.find();
   }
 
   async findOne(id: string): Promise<Match> {
-    const match = await this.matchModel.findById(id).exec();
+    const match = await this.matchModel.findById(id);
     if (!match) {
       throw new NotFoundException('Match not found');
     }
@@ -42,7 +42,7 @@ export class MatchService {
   }
 
   async remove(id: string): Promise<void> {
-    const result = await this.matchModel.deleteOne({ _id: id }).exec();
+    const result = await this.matchModel.deleteOne({ _id: id });
     if (result.deletedCount === 0) {
       throw new NotFoundException('Match not found');
     }

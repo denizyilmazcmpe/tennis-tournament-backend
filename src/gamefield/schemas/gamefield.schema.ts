@@ -3,16 +3,10 @@ import { Document } from 'mongoose';
 
 export type GameFieldDocument = GameField & Document;
 
-@Schema()
+@Schema({ timestamps: true })
 export class GameField {
   @Prop({ required: true })
   name: string;
-
-  @Prop({ type: Date, default: Date.now })
-  createdAt: Date;
-
-  @Prop({ type: Date, default: Date.now })
-  updatedAt: Date;
 }
 
 export const GameFieldSchema = SchemaFactory.createForClass(GameField);

@@ -13,16 +13,17 @@ export class PhaseMatchService {
   ) {}
 
   async create(createPhaseMatchDto: CreatePhaseMatchDto): Promise<PhaseMatch> {
-    const createdPhaseMatch = new this.phaseMatchModel(createPhaseMatchDto);
-    return createdPhaseMatch.save();
+    const createdPhaseMatch =
+      await this.phaseMatchModel.create(createPhaseMatchDto);
+    return createdPhaseMatch;
   }
 
   async findAll(): Promise<PhaseMatch[]> {
-    return this.phaseMatchModel.find().exec();
+    return await this.phaseMatchModel.find();
   }
 
   async findOne(id: string): Promise<PhaseMatch> {
-    const phaseMatch = await this.phaseMatchModel.findById(id).exec();
+    const phaseMatch = await this.phaseMatchModel.findById(id);
     if (!phaseMatch) {
       throw new NotFoundException('PhaseMatch not found');
     }
@@ -45,7 +46,7 @@ export class PhaseMatchService {
   }
 
   async remove(id: string): Promise<void> {
-    const result = await this.phaseMatchModel.deleteOne({ _id: id }).exec();
+    const result = await this.phaseMatchModel.deleteOne({ _id: id });
     if (result.deletedCount === 0) {
       throw new NotFoundException('PhaseMatch not found');
     }

@@ -13,16 +13,16 @@ export class UserService {
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-    const createdUser = new this.userModel(createUserDto);
-    return createdUser.save();
+    const createdUser = await this.userModel.create(createUserDto);
+    return createdUser;
   }
 
   async findAll(): Promise<User[]> {
-    return this.userModel.find().exec();
+    return await this.userModel.find();
   }
 
   async findOne(id: string): Promise<User> {
-    const user = await this.userModel.findById(id).exec();
+    const user = await this.userModel.findById(id);
     if (!user) {
       throw new NotFoundException('User not found');
     }
@@ -42,7 +42,7 @@ export class UserService {
   }
 
   async remove(id: string): Promise<void> {
-    const result = await this.userModel.deleteOne({ _id: id }).exec();
+    const result = await this.userModel.deleteOne({ _id: id });
     if (result.deletedCount === 0) {
       throw new NotFoundException('User not found');
     }

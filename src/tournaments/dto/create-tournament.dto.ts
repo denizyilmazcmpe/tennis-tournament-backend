@@ -1,7 +1,8 @@
-import { IsString, Length } from 'class-validator';
+import { IsString, MaxLength, MinLength } from 'class-validator';
 
 export class CreateTournamentDto {
   @IsString()
-  @Length(2, 250)
+  @MaxLength(250)
+  @MinLength(2)
   name: string;
 }

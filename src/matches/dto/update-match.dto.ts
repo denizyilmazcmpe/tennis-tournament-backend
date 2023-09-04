@@ -15,4 +15,8 @@ export class UpdateMatchDto extends PartialType(CreateMatchDto) {
   @IsOptional()
   @IsString()
   winnerPlayerId: string;
+
+  @IsOptional()
+  @IsString()
+  gameFieldId: string;
 }

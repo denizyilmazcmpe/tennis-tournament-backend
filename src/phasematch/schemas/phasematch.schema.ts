@@ -5,7 +5,7 @@ import { Match } from '../../matches/schemas/match.schema';
 
 export type PhaseMatchDocument = PhaseMatch & Document;
 
-@Schema()
+@Schema({ timestamps: true })
 export class PhaseMatch {
   @Prop({ type: 'ObjectId', ref: 'Phase' })
   phaseId: Phase;

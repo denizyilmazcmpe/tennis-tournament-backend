@@ -18,18 +18,18 @@ export class UserTournamentService {
   async create(
     createUserTournamentDto: CreateUserTournamentDto,
   ): Promise<UserTournament> {
-    const createdUserTournament = new this.userTournamentModel(
+    const createdUserTournament = await this.userTournamentModel.create(
       createUserTournamentDto,
     );
-    return createdUserTournament.save();
+    return createdUserTournament;
   }
 
   async findAll(): Promise<UserTournament[]> {
-    return this.userTournamentModel.find().exec();
+    return await this.userTournamentModel.find();
   }
 
   async findOne(id: string): Promise<UserTournament> {
-    const userTournament = await this.userTournamentModel.findById(id).exec();
+    const userTournament = await this.userTournamentModel.findById(id);
     if (!userTournament) {
       throw new NotFoundException('UserTournament not found');
     }
@@ -53,7 +53,7 @@ export class UserTournamentService {
   }
 
   async remove(id: string): Promise<void> {
-    const result = await this.userTournamentModel.deleteOne({ _id: id }).exec();
+    const result = await this.userTournamentModel.deleteOne({ _id: id });
     if (result.deletedCount === 0) {
       throw new NotFoundException('UserTournament not found');
     }

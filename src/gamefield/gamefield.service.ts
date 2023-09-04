@@ -13,16 +13,17 @@ export class GameFieldService {
   ) {}
 
   async create(createGameFieldDto: CreateGameFieldDto): Promise<GameField> {
-    const createdGameField = new this.gameFieldModel(createGameFieldDto);
-    return createdGameField.save();
+    const createdGameField =
+      await this.gameFieldModel.create(createGameFieldDto);
+    return createdGameField;
   }
 
   async findAll(): Promise<GameField[]> {
-    return this.gameFieldModel.find().exec();
+    return await this.gameFieldModel.find();
   }
 
   async findOne(id: string): Promise<GameField> {
-    const gameField = await this.gameFieldModel.findById(id).exec();
+    const gameField = await this.gameFieldModel.findById(id);
     if (!gameField) {
       throw new NotFoundException('GameField not found');
     }
@@ -45,7 +46,7 @@ export class GameFieldService {
   }
 
   async remove(id: string): Promise<void> {
-    const result = await this.gameFieldModel.deleteOne({ _id: id }).exec();
+    const result = await this.gameFieldModel.deleteOne({ _id: id });
     if (result.deletedCount === 0) {
       throw new NotFoundException('GameField not found');
     }

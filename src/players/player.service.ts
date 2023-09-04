@@ -13,16 +13,16 @@ export class PlayerService {
   ) {}
 
   async create(createPlayerDto: CreatePlayerDto): Promise<Player> {
-    const createdPlayer = new this.playerModel(createPlayerDto);
-    return createdPlayer.save();
+    const createdPlayer = await this.playerModel.create(createPlayerDto);
+    return createdPlayer;
   }
 
   async findAll(): Promise<Player[]> {
-    return this.playerModel.find().exec();
+    return await this.playerModel.find();
   }
 
   async findOne(id: string): Promise<Player> {
-    const player = await this.playerModel.findById(id).exec();
+    const player = await this.playerModel.findById(id);
     if (!player) {
       throw new NotFoundException('Player not found');
     }
@@ -42,7 +42,7 @@ export class PlayerService {
   }
 
   async remove(id: string): Promise<void> {
-    const result = await this.playerModel.deleteOne({ _id: id }).exec();
+    const result = await this.playerModel.deleteOne({ _id: id });
     if (result.deletedCount === 0) {
       throw new NotFoundException('Player not found');
     }

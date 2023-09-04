@@ -4,16 +4,10 @@ import { Phase } from 'src/phases/schemas/phase.schema';
 
 export type TournamentDocument = Tournament & Document;
 
-@Schema()
+@Schema({ timestamps: true })
 export class Tournament {
   @Prop({ required: true })
   name: string;
-
-  @Prop({ type: Date, default: Date.now })
-  createdAt: Date;
-
-  @Prop({ type: Date, default: Date.now })
-  updatedAt: Date;
 
   @Prop({ type: [{ type: 'ObjectId', ref: 'Phase' }] })
   phases: Phase[];

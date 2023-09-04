@@ -3,16 +3,10 @@ import { Document } from 'mongoose';
 
 export type PlayerDocument = Player & Document;
 
-@Schema()
+@Schema({ timestamps: true })
 export class Player {
   @Prop({ required: true })
   name: string;
-
-  @Prop({ type: Date, default: Date.now })
-  createdAt: Date;
-
-  @Prop({ type: Date, default: Date.now })
-  updatedAt: Date;
 }
 
 export const PlayerSchema = SchemaFactory.createForClass(Player);

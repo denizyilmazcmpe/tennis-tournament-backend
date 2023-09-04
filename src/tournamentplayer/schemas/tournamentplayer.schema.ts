@@ -5,19 +5,13 @@ import { Player } from '../../players/schemas/player.schema';
 
 export type TournamentPlayerDocument = TournamentPlayer & Document;
 
-@Schema()
+@Schema({ timestamps: true })
 export class TournamentPlayer {
   @Prop({ type: 'ObjectId', ref: 'Tournament' })
   tournamentId: Tournament;
 
   @Prop({ type: 'ObjectId', ref: 'Player' })
   playerId: Player;
-
-  @Prop({ type: Date, default: Date.now })
-  createdAt: Date;
-
-  @Prop({ type: Date, default: Date.now })
-  updatedAt: Date;
 }
 
 export const TournamentPlayerSchema =
