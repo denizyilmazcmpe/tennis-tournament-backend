@@ -11,6 +11,11 @@ import { PhaseMatchModule } from './phasematch/phasematch.module';
 import { UsersModule } from './users/users.module';
 import { UserTournamentModule } from './usertournament/usertournament.module';
 import { TournamentPlayerModule } from './tournamentplayer/tournamentplayer.module';
+import { PassportModule } from '@nestjs/passport';
+import { JwtModule } from '@nestjs/jwt';
+import { JwtAuthService } from './auth/jwt/jwt.service';
+import { JwtStrategy } from './auth/jwt/jwt.strategy';
+import { jwtConfig } from './auth/jwt/jwt.config';
 
 @Module({
   imports: [
@@ -24,8 +29,11 @@ import { TournamentPlayerModule } from './tournamentplayer/tournamentplayer.modu
     UsersModule,
     UserTournamentModule,
     TournamentPlayerModule,
+    PassportModule,
+    JwtModule.register(jwtConfig),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, JwtAuthService, JwtStrategy],
+  exports: [JwtModule],
 })
 export class AppModule {}

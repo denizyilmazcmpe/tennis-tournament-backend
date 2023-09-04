@@ -11,7 +11,7 @@ import { PhaseService } from './phase.service';
 import { CreatePhaseDto } from './dto/create-phase.dto';
 import { UpdatePhaseDto } from './dto/update-phase.dto';
 
-@Controller('phase')
+@Controller('phases')
 export class PhaseController {
   constructor(private readonly phaseService: PhaseService) {}
 
