@@ -9,19 +9,15 @@ export class AuthService {
   constructor(private readonly jwtService: JwtService) {}
 
   async findUserByUsername(username: string): Promise<User | undefined> {
-    // Kullanıcıyı veritabanından username ile arayın
     const user = await this.userService.findByUsername(username);
     return user;
   }
 
   async validateUser(username: string, password: string): Promise<any> {
-    // Kullanıcıyı veritabanınızda doğrulayın
     const user = await this.findUserByUsername(username);
 
     if (user && bcrypt.compareSync(password, user.password)) {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { password, ...result } = user;
-      return result;
+      return user;
     }
 
     return null;
