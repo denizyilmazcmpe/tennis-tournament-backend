@@ -16,6 +16,8 @@ import { JwtModule } from '@nestjs/jwt';
 import { JwtAuthService } from './auth/jwt/jwt.service';
 import { JwtStrategy } from './auth/jwt/jwt.strategy';
 import { jwtConfig } from './auth/jwt/jwt.config';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { LoggingInterceptor } from './auth/interceptor';
 
 @Module({
   imports: [
@@ -33,7 +35,15 @@ import { jwtConfig } from './auth/jwt/jwt.config';
     JwtModule.register(jwtConfig),
   ],
   controllers: [AppController],
-  providers: [AppService, JwtAuthService, JwtStrategy],
+  providers: [
+    AppService,
+    JwtAuthService,
+    JwtStrategy,
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: LoggingInterceptor,
+    },
+  ],
   exports: [JwtModule],
 })
 export class AppModule {}

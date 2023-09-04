@@ -1,42 +1,41 @@
 import {
   Controller,
-  Get,
-  Param,
   Post,
   Body,
+  Get,
+  Param,
   Put,
   Delete,
 } from '@nestjs/common';
-import { UserService } from './user.service';
-import { CreateUserDto } from './dto/create-user.dto';
+import { AuthService } from 'src/auth/auth.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('users')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly authService: AuthService) {}
 
-  @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.userService.findAll();
+  @Post('register')
+  async registerUser(@Body() body: { username: string; password: string }) {
+    const { username, password } = body;
+    const user = await this.authService.createUser(username, password);
+    return { message: 'User registered successfully', user };
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.userService.findOne(id);
+    const userId = parseInt(id, 10); // id'yi sayıya dönüştür
+    return this.authService.getUserById(userId);
   }
 
   @Put(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(id, updateUserDto);
+    const userId = parseInt(id, 10); // id'yi sayıya dönüştür
+    return this.authService.updateUser(userId, updateUserDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.userService.remove(id);
+    const userId = parseInt(id, 10);
+    return this.authService.deleteUser(userId);
   }
 }
