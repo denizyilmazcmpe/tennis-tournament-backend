@@ -23,13 +23,13 @@ export class UserController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    const userId = parseInt(id, 10); // id'yi sayıya dönüştür
+    const userId = parseInt(id, 10);
     return this.authService.getUserById(userId);
   }
 
   @Put(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    const userId = parseInt(id, 10); // id'yi sayıya dönüştür
+    const userId = parseInt(id, 10);
     return this.authService.updateUser(userId, updateUserDto);
   }
 

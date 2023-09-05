@@ -49,11 +49,6 @@ export class AuthService {
     const deletedUser = { ...this.users.splice(userIndex, 1)[0] };
     delete deletedUser.password;
 
-    // Bu kısımda gerçek bir kullanıcı verisini silmek istiyorsanız
-    // veritabanından silebilirsiniz.
-
-    // Örnek: await this.userModel.findByIdAndDelete(userId);
-
     return deletedUser;
   }
 

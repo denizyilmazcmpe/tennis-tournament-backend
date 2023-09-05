@@ -12,13 +12,11 @@ export class LoggingInterceptor implements NestInterceptor {
     const request = context.switchToHttp().getRequest();
     const response = context.switchToHttp().getResponse();
 
-    // Burada isteği işleyebilir veya loglayabilirsiniz.
     console.log(`Request received: ${request.url}`);
     console.log('headers ', JSON.stringify(request.headers));
 
     return next.handle().pipe(
       tap(() => {
-        // Burada yanıtı işleyebilir veya loglayabilirsiniz.
         console.log(`Response sent: ${response.statusCode}`);
       }),
     );
