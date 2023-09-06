@@ -3,6 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Tournament, TournamentSchema } from './schemas/tournament.schema';
 import { TournamentController } from './tournament.controller';
 import { TournamentService } from './tournament.service';
+import { LoggingInterceptor } from 'src/auth/interceptor/logging.interceptor';
 
 @Module({
   imports: [
@@ -11,6 +12,6 @@ import { TournamentService } from './tournament.service';
     ]),
   ],
   controllers: [TournamentController],
-  providers: [TournamentService],
+  providers: [TournamentService, LoggingInterceptor],
 })
 export class TournamentModule {}
