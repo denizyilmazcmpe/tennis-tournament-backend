@@ -17,7 +17,7 @@ import { JwtAuthService } from './auth/jwt/jwt.service';
 import { JwtStrategy } from './auth/jwt/jwt.strategy';
 import { jwtConfig } from './auth/jwt/jwt.config';
 import { APP_INTERCEPTOR } from '@nestjs/core';
-import { LoggingInterceptor } from './auth/interceptor';
+import { LoggingInterceptor } from './auth/interceptor/logging.interceptor';
 
 @Module({
   imports: [

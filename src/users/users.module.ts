@@ -5,7 +5,7 @@ import { UserController } from './user.controller';
 import { UserService } from './user.service';
 import { AuthService } from 'src/auth/auth.service';
 import { JwtService } from '@nestjs/jwt';
-import { LoggingInterceptor } from 'src/auth/interceptor';
+import { LoggingInterceptor } from 'src/auth/interceptor/logging.interceptor';
 
 @Module({
   imports: [
