@@ -2,11 +2,14 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { User } from 'src/users/schemas/user.schema';
+import { UserService } from 'src/users/user.service';
 
 @Injectable()
 export class AuthService {
-  userService: any;
-  constructor(private readonly jwtService: JwtService) {}
+  constructor(
+    private readonly jwtService: JwtService,
+    private readonly userService: UserService,
+  ) {}
   private readonly users: any[] = [];
 
   async createUser(username: string, password: string): Promise<any> {
@@ -53,8 +56,7 @@ export class AuthService {
   }
 
   async findUserByUsername(username: string): Promise<User | undefined> {
-    const user = await this.userService.findByUsername(username);
-    return user;
+    return await this.userService.findByUsername(username);
   }
 
   async validateUser(username: string, password: string): Promise<any> {
@@ -63,7 +65,6 @@ export class AuthService {
     if (user && bcrypt.compareSync(password, user.password)) {
       return user;
     }
-
     return null;
   }
 

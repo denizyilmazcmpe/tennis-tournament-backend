@@ -4,6 +4,8 @@ import { Tournament, TournamentSchema } from './schemas/tournament.schema';
 import { TournamentController } from './tournament.controller';
 import { TournamentService } from './tournament.service';
 import { LoggingInterceptor } from 'src/auth/interceptor/logging.interceptor';
+import { JwtService } from '@nestjs/jwt';
+
 
 @Module({
   imports: [
@@ -12,6 +14,6 @@ import { LoggingInterceptor } from 'src/auth/interceptor/logging.interceptor';
     ]),
   ],
   controllers: [TournamentController],
-  providers: [TournamentService, LoggingInterceptor],
+  providers: [TournamentService, LoggingInterceptor, JwtService],
 })
 export class TournamentModule {}

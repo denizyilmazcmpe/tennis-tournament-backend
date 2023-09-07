@@ -32,7 +32,12 @@ import { LoggingInterceptor } from './auth/interceptor/logging.interceptor';
     UserTournamentModule,
     TournamentPlayerModule,
     PassportModule,
-    JwtModule.register(jwtConfig),
+    JwtModule.registerAsync({
+      useFactory: () => ({
+        secret: process.env.JWT_SECRET, // Use the environment variable
+        signOptions: { expiresIn: '1h' }, // You can customize token expiration
+      }),
+    }),
   ],
   controllers: [AppController],
   providers: [

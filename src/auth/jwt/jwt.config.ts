@@ -5,6 +5,6 @@ export const jwtConstants = {
 };
 
 export const jwtConfig: JwtModuleOptions = {
-  secret: jwtConstants.secret,
+  secret: 'your-secret-key', // Replace with your actual secret key
   signOptions: { expiresIn: '1h' },
 };
